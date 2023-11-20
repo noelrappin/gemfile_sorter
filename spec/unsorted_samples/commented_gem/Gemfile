@@ -1,0 +1,9 @@
+# zeitwerk is also nice
+gem "zeitwerk"
+
+# all these comments get assigned to the next gem
+# use rails for cool rails things
+gem "rails"
+
+# awesome print is awesome
+gem "awesome_print"

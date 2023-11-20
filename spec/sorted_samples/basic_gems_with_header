@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby "3.2.2"
+
+# This is part of a header comment and should go first
+# This should go second
+
+gem "awesome_print"
+gem "rails"
+gem "zeitwerk"

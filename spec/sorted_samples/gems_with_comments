@@ -1,0 +1,8 @@
+# commented gems are sorted as though they were not commented
+# gem "awesome_print"
+
+# use rails for cool rails things
+gem "rails"
+
+# zeitwerk is also nice
+gem "zeitwerk"

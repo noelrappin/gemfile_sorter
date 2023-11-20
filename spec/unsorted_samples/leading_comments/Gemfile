@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+# This is part of a header comment and should go first
+# This should go second
+
+# line breaks in header comments are honored
+
+# but this comment goes to the gem
+gem "zeitwerk"
+gem "rails"
+gem "awesome_print"

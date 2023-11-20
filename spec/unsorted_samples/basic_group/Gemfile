@@ -1,0 +1,17 @@
+group :development, :test do
+  gem "rspec"
+  gem "capybara"
+end
+
+group :development do
+  gem "web-console"
+  gem "annotate"
+end
+
+gem "zeitwerk"
+gem "rails"
+gem "awesome_print"
+
+group :test do
+  gem "selenium-webdriver"
+end

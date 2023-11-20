@@ -1,0 +1,5 @@
+gem "zeitwerk", "1.0"
+gem "rails", "~> 7.0"
+gem "zeitwerk"
+gem "awesome_print"
+gem "rails", "~> 7.1"

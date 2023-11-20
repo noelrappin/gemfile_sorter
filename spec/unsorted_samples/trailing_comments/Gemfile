@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+# but this comment goes to the gem
+gem "zeitwerk"
+gem "rails"
+gem "awesome_print"
+
+# This is part of a trailing comment and should go last
+# This should go second
+
+# line breaks in trailing comments are honored
