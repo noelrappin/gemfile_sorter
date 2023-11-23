@@ -1,5 +1,4 @@
 RSpec::Matchers.define :result_in_group do |expected_group|
-
   match do |incoming_options|
     @expected_group = expected_group
     @gem = gem(incoming_options)
@@ -20,7 +19,8 @@ RSpec::Matchers.define :result_in_group do |expected_group|
       nil,
       *incoming_options,
       line: %(gem "zeitwerk", "1.2.3", #{incoming_options.join(" ")}).strip,
-      line_number: 1)
+      line_number: 1
+    )
   end
 
   def expected_line

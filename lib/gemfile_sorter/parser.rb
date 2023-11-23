@@ -1,8 +1,7 @@
 module GemfileSorter
   class Parser
-    include GemHolder
-    attr_reader :filename, :groups
-    attr_accessor :current_comments, :leading_comments, :current_group
+    attr_reader :filename, :groups, :gem_holders, :top_level_gems
+    attr_accessor :current_comments, :leading_comments
 
     def self.parse(filename)
       parser = new(filename)
@@ -12,10 +11,10 @@ module GemfileSorter
 
     def initialize(filename)
       @filename = filename
-      @gems = {}
+      @top_level_gems = GemHolder.new("top_level", line: "", line_number: nil)
       @leading_comments = CommentGroup.new
       @current_comments = CommentGroup.new
-      @current_group = nil
+      @gem_holders = [@top_level_gems]
       @groups = Groups.new
     end
 
@@ -39,7 +38,7 @@ module GemfileSorter
 
     def output
       leading_comments.to_s +
-        gem_string +
+        top_level_gems.gem_string +
         groups.to_s +
         current_comments.extra_line_unless_empty +
         current_comments.to_s
@@ -55,6 +54,8 @@ module GemfileSorter
         handle_comment(*_rest, line:, line_number:)
       in ["group", *names, "do"]
         handle_group(names, line:, line_number:)
+      in ["source", source, "do"]
+        handle_source(name, line:, line_number:)
       in ["end"]
         handle_end
       in []
@@ -71,7 +72,7 @@ module GemfileSorter
       if group_name
         group = groups.add_group(group_name, line: "group :#{group_name} do\n", line_number: gem.line_number)
       end
-      group || current_group || self
+      group || gem_holders.last
     end
 
     def handle_gem(name, *options, line:, line_number:)
@@ -81,13 +82,16 @@ module GemfileSorter
       result
     end
 
+    def handle_source(name, line:, line_number:)
+    end
+
     def handle_group(names, line:, line_number:)
       group = groups.add_group(names, line:, line_number:)
-      self.current_group = group
+      gem_holders.push(group)
     end
 
     def handle_end
-      self.current_group = nil
+      gem_holders.pop
     end
 
     def handle_comment(*_rest, line:, line_number:)
@@ -97,7 +101,7 @@ module GemfileSorter
     end
 
     def handle_blank_line
-      if gems.empty?
+      if top_level_gems.empty?
         leading_comments << current_comments unless current_comments.empty?
         leading_comments << GemfileSorter::Line::BlankLine.new unless leading_comments.empty?
         self.current_comments = CommentGroup.new

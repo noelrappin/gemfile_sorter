@@ -1,14 +1,11 @@
 module GemfileSorter
   module Line
-    class Group
-      include GemHolder
-      attr_accessor :names, :line, :line_number, :gems
+    class Group < GemHolder
+      attr_accessor :names
 
       def initialize(*names, line:, line_number:)
         @names = names
-        @line = line
-        @line_number = line_number
-        @gems = {}
+        super(normalized_name, line:, line_number:)
       end
 
       def normalized_name
@@ -19,10 +16,6 @@ module GemfileSorter
         normalized_name <=> other.normalized_name
       rescue
         raise InvalidLineComparisonError
-      end
-
-      def to_s
-        "\n" + line + gem_string.delete_suffix(",") + "end\n"
       end
     end
   end

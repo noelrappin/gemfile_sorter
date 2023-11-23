@@ -1,0 +1,17 @@
+source "source 1" do
+  gem "rspec"
+  gem "capybara"
+end
+
+source "source 2" do
+  gem "web-console"
+  gem "annotate"
+end
+
+gem "zeitwerk"
+gem "rails"
+gem "awesome_print"
+
+source "source 3" do
+  gem "selenium-webdriver"
+end

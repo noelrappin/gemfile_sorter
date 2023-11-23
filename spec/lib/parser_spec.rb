@@ -37,7 +37,7 @@ module GemfileSorter
         expect(result.line_number).to eq(1)
         expect(result.line).to eq(%(gem "zeitwerk", "1.2.3"))
         expect(result.options).to eq(%w[1.2.3])
-        expect(parser.gems).to eq({"zeitwerk" => result})
+        expect(parser.top_level_gems.gems).to eq({"zeitwerk" => result})
       end
 
       it "parses a commented gem" do
@@ -47,7 +47,7 @@ module GemfileSorter
         expect(result.line_number).to eq(1)
         expect(result.line).to eq(%(# gem "zeitwerk", "1.2.3"))
         expect(result.options).to eq(%w[1.2.3])
-        expect(parser.gems).to eq({"zeitwerk" => result})
+        expect(parser.top_level_gems.gems).to eq({"zeitwerk" => result})
       end
 
       it "parses a comment" do
