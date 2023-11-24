@@ -10,7 +10,7 @@ module GemfileSorter
 
     def empty? = groups.empty?
 
-    def add_group(names, line:, line_number:)
+    def add(names, line:, line_number:)
       group = Line::Group.new(names, line:, line_number:)
       groups[group.normalized_name] ||= group
     end

@@ -8,7 +8,7 @@ module GemfileSorter
       @line_number = line_number
     end
 
-    def add_gem(gem)
+    def add(gem)
       @gems[gem.name] = gem
     end
 

@@ -5,13 +5,10 @@ gem "zeitwerk"
 source "source_1" do
   gem "capybara"
   gem "rspec"
+  gem "selenium-webdriver"
 end
 
 source "source_2" do
   gem "annotate"
   gem "web-console"
-end
-
-source "source_3" do
-  gem "selenium-webdriver"
 end

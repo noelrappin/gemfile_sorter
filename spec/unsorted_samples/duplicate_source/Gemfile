@@ -12,6 +12,6 @@ gem "zeitwerk"
 gem "rails"
 gem "awesome_print"
 
-source "source_3" do
+source "source_1" do
   gem "selenium-webdriver"
 end

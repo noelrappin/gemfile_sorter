@@ -10,10 +10,11 @@ RSpec.describe "Acceptance Tests", :slow do
   specify { expect("basic_group").to be_correctly_sorted }
   specify { expect("group_with_duplicates").to be_correctly_sorted }
   specify { expect("inline_groups").to be_correctly_sorted }
-  # specify { expect("basic_source").to be_correctly_sorted }
+  specify { expect("basic_source").to be_correctly_sorted }
+  specify { expect("duplicate_source").to be_correctly_sorted }
 
-  # duplicate source declarations
   # inline source declarations
   # source with group
   # group with source
+  # inline with both
 end

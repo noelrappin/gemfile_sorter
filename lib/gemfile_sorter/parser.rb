@@ -1,6 +1,6 @@
 module GemfileSorter
   class Parser
-    attr_reader :filename, :groups, :gem_holders, :top_level_gems
+    attr_reader :filename, :groups, :gem_holders, :top_level_gems, :sources
     attr_accessor :current_comments, :leading_comments
 
     def self.parse(filename)
@@ -16,6 +16,7 @@ module GemfileSorter
       @current_comments = CommentGroup.new
       @gem_holders = [@top_level_gems]
       @groups = Groups.new
+      @sources = Sources.new
     end
 
     def contents
@@ -40,6 +41,7 @@ module GemfileSorter
       leading_comments.to_s +
         top_level_gems.gem_string +
         groups.to_s +
+        sources.to_s +
         current_comments.extra_line_unless_empty +
         current_comments.to_s
     end
@@ -54,7 +56,7 @@ module GemfileSorter
         handle_comment(*_rest, line:, line_number:)
       in ["group", *names, "do"]
         handle_group(names, line:, line_number:)
-      in ["source", source, "do"]
+      in ["source", name, "do"]
         handle_source(name, line:, line_number:)
       in ["end"]
         handle_end
@@ -66,27 +68,29 @@ module GemfileSorter
       end
     end
 
-    def group_for_gem(gem)
+    def holder_for_gem(gem)
       group = nil
       group_name = gem.extract_group
       if group_name
-        group = groups.add_group(group_name, line: "group :#{group_name} do\n", line_number: gem.line_number)
+        group = groups.add(group_name, line: "group :#{group_name} do\n", line_number: gem.line_number)
       end
       group || gem_holders.last
     end
 
     def handle_gem(name, *options, line:, line_number:)
       result = Line::Gem.new(name, current_comments, *options, line_number:, line:)
-      group_for_gem(result).add_gem(result)
+      holder_for_gem(result).add(result)
       self.current_comments = CommentGroup.new
       result
     end
 
     def handle_source(name, line:, line_number:)
+      source = sources.add(name, line:, line_number:)
+      gem_holders.push(source)
     end
 
     def handle_group(names, line:, line_number:)
-      group = groups.add_group(names, line:, line_number:)
+      group = groups.add(names, line:, line_number:)
       gem_holders.push(group)
     end
 
