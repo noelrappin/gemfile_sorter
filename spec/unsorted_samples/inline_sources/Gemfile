@@ -1,0 +1,19 @@
+source "github" do
+  gem "capybara"
+end
+
+gem "web-console", source: "localhost"
+gem "zeitwerk"
+
+gem "rspec", "source" => "github"
+gem "rails"
+
+source "localhost" do
+  gem "annotate"
+end
+
+gem "awesome_print"
+
+source "gem_server" do
+  gem "selenium-webdriver"
+end

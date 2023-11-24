@@ -1,0 +1,17 @@
+gem "awesome_print"
+gem "rails"
+gem "zeitwerk"
+
+group "gem_server" do
+  gem "selenium-webdriver"
+end
+
+source "github" do
+  gem "capybara"
+  gem "rspec"
+end
+
+source "localhost" do
+  gem "annotate"
+  gem "web-console"
+end

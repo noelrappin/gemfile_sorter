@@ -20,7 +20,7 @@ module GemfileSorter
       describe "output" do
         it "prints just the line without comments" do
           gem = Gem.new("zeitwerk", line: %(gem "zeitwerk", "1.2.3"))
-          expect(gem.to_s).to eq(%(gem "zeitwerk", "1.2.3"))
+          expect(gem.to_s).to eq(%(gem "zeitwerk", "1.2.3"\n))
         end
       end
 
