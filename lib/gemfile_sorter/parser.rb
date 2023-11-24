@@ -55,9 +55,9 @@ module GemfileSorter
       in ["#", *_rest]
         handle_comment(*_rest, line:, line_number:)
       in ["group", *names, "do"]
-        handle_group(names, line:, line_number:)
+        handle_holder(groups, names, line:, line_number:)
       in ["source", name, "do"]
-        handle_source(name, line:, line_number:)
+        handle_holder(sources, name, line:, line_number:)
       in ["end"]
         handle_end
       in []
@@ -84,14 +84,9 @@ module GemfileSorter
       result
     end
 
-    def handle_source(name, line:, line_number:)
-      source = sources.add(name, line:, line_number:)
-      gem_holders.push(source)
-    end
-
-    def handle_group(names, line:, line_number:)
-      group = groups.add(names, line:, line_number:)
-      gem_holders.push(group)
+    def handle_holder(meta_holder, name, line:, line_number:)
+      holder = meta_holder.add(name, line:, line_number:)
+      gem_holders.push(holder)
     end
 
     def handle_end

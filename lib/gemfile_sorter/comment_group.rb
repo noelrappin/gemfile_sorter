@@ -1,7 +1,7 @@
 module GemfileSorter
   class CommentGroup
     include Enumerable
-    include LineGrouping
+
     attr_accessor :comments
 
     def initialize(*comments)
@@ -23,5 +23,9 @@ module GemfileSorter
     def empty? = comments.empty?
 
     def each = comments.each
+
+    def extra_line_unless_empty
+      empty? ? "" : "\n"
+    end
   end
 end

@@ -8,6 +8,8 @@ module GemfileSorter
         super(name, line:, line_number:)
       end
 
+      def normalized_name = name
+
       def <=>(other)
         name <=> other.name
       rescue
