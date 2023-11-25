@@ -1,24 +1,36 @@
 # GemfileSorter
 
-TODO: Delete this and the text below, and describe your gem
+This gem contains an executable that sorts the contents of a `Gemfile`, 
+which is to say that it:
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gemfile_sorter`. To experiment with that code, run `bin/console` for an interactive prompt.
+* sorts gemfiles by name
+* consolidates duplicate group and source blocks
+* pulls inline declarations of group and source 
 
-## Installation
+This is _not_ a sophisticated parser of Gemfiles, and if you do anything 
+particularly complicated in your `Gemfile` this system will likely get 
+flummoxed. Specifically..
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+* This system will be confused if you have individual gem declarations that
+  span multiple lines.
+* This system will be confused if you do dynamic, conditional, or loops in your 
+  `Gemfile`.
+* This system will be confused if a gem declaration has both an inline group and
+  an inline source (this one will likely be fixed).
 
-Install the gem and add to the application's Gemfile by executing:
+I'm sure there are other ways this can fail. If you come across such a way, 
+please submit your `Gemfile` as an issue and we'll see what we can do.
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+## Installation and Usage
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+Installing this as `gem install gemfile_sorter`. You don't need this to be part
+of your repo, the command is:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+`gemfile_sorter <directory>`
 
-## Usage
-
-TODO: Write usage instructions here
+The existing `Gemfile` is moved to `Gemfile.unsorted` and the new `Gemfile` is
+put in place. Like, I said, this is still early days, so I'd make sure the new 
+Gemfile hasn't lost anything before you use it. 
 
 ## Development
 
