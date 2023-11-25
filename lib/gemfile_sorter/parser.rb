@@ -55,9 +55,9 @@ module GemfileSorter
       in ["#", *_rest]
         handle_comment(*_rest, line:, line_number:)
       in ["group", *names, "do"]
-        handle_block(groups, names, line:, line_number:)
+        handle_block(:groups, names, line:, line_number:)
       in ["source", name, "do"]
-        handle_block(sources, name, line:, line_number:)
+        handle_block(:sources, name, line:, line_number:)
       in ["end"]
         handle_end
       in []
@@ -66,6 +66,10 @@ module GemfileSorter
         # treat other lines like comments
         handle_comment(*_rest, line:, line_number:)
       end
+    end
+
+    def current_block_map_container
+      block_stack.last.container? ? block_stack.last : self
     end
 
     def block_for_gem(gem)
@@ -86,8 +90,8 @@ module GemfileSorter
       result
     end
 
-    def handle_block(block_map, name, line:, line_number:)
-      block = block_map.add(name, line:, line_number:)
+    def handle_block(block_map_name, name, line:, line_number:)
+      block = current_block_map_container.send(block_map_name).add(name, line:, line_number:)
       block_stack.push(block)
     end
 

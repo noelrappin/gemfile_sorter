@@ -8,6 +8,10 @@ module GemfileSorter
       @line_number = line_number
     end
 
+    def container? = false
+
+    def inside_block_map = nil
+
     def add(gem)
       @gems[gem.name] = gem
     end
@@ -16,8 +20,16 @@ module GemfileSorter
       gems.values.sort.map { _1.to_s }.join.delete_prefix("\n")
     end
 
+    def leading_spaces
+      line.match(/(\A *)/)[1]
+    end
+
     def to_s
-      "\n" + line + gem_string.delete_suffix(",") + "end\n"
+      "\n" +
+        line +
+        gem_string.delete_suffix(",") +
+        (inside_block_map&.to_s || "") +
+        "#{leading_spaces}end\n"
     end
 
     def empty? = gems.empty?
