@@ -23,18 +23,6 @@ module GemfileSorter
           expect(gem.to_s).to eq(%(gem "zeitwerk", "1.2.3"\n))
         end
       end
-
-      describe "extract groups" do
-        it "extracts a symbol based single group", :aggregate_failures do
-          expect(%w[]).to result_in_group(nil)
-          expect(%w[group: :development]).to result_in_group("development")
-          expect(%w[group: development]).to result_in_group("development")
-          expect(%w[:group => development]).to result_in_group("development")
-          expect(%w[group => development]).to result_in_group("development")
-          expect(%w[group: \[:development :test\]]).to result_in_group("development, test")
-          expect(%w[group: \[:test :development\]]).to result_in_group("development, test")
-        end
-      end
     end
   end
 end

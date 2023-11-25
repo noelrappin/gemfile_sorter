@@ -14,7 +14,7 @@ module GemfileSorter
 
     def starting_index = options.find_index { _1.match(/#{key}/) }
 
-    def starting_index? = !!starting_index
+    def match? = !!starting_index
 
     def running_option = options[running_pointer]
 
@@ -29,7 +29,7 @@ module GemfileSorter
       value
     end
 
-    def result_loop
+    def extract_multiple_results
       return unless result.first&.start_with?("[")
       loop do
         increment_pointer
@@ -43,7 +43,9 @@ module GemfileSorter
     end
 
     def extraction_end
-      gem.line.index(result.last) + result.last.size - 1
+      size = (result.last&.size || 0)
+      size += 1 unless symbol_result?
+      gem.line.index(result.last) + (size || 0) - 1
     end
 
     def updated_line
@@ -62,13 +64,26 @@ module GemfileSorter
       end.sort.join(", ")
     end
 
-    def extract
-      return unless starting_index?
+    def extract_initial_result
       self.running_pointer = starting_index + 1
       result << initial_result
-      result_loop
+    end
+
+    def extract
+      return unless match?
+      extract_initial_result
+      extract_multiple_results
       result_string
     end
 
+    def symbol_result? = result.last&.include?(":")
+
+    def annotated_result
+      symbol_result? ? ":#{result_string}" : %("#{result_string}")
+    end
+
+    def resulting_first_line
+      "#{key} #{annotated_result} do\n"
+    end
   end
 end

@@ -12,6 +12,10 @@ module GemfileSorter
       empty? ? "" : "\n"
     end
 
+    def add_gem(gem)
+      add(gem.inline_result, line: gem.inline_line, line_number: gem.line_number)
+    end
+
     def add(names, line:, line_number:)
       holder = holder(names, line:, line_number:)
       gem_holders[holder.normalized_name] ||= holder

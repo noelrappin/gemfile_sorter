@@ -69,12 +69,14 @@ module GemfileSorter
     end
 
     def holder_for_gem(gem)
-      group = nil
-      group_name = gem.extract_group
-      if group_name
-        group = groups.add(group_name, line: "group :#{group_name} do\n", line_number: gem.line_number)
-      end
+      group = add_inline_gem(gem)
       group || gem_holders.last
+    end
+
+    def add_inline_gem(gem)
+      return unless gem.inline_match?
+      meta_holder = (gem.inline_kind == "group") ? groups : sources
+      meta_holder.add_gem(gem)
     end
 
     def handle_gem(name, *options, line:, line_number:)

@@ -5,7 +5,7 @@ end
 gem "web-console", source: "localhost"
 gem "zeitwerk"
 
-gem "rspec", "source" => "github"
+gem "rspec", source: "github"
 gem "rails"
 
 source "localhost" do

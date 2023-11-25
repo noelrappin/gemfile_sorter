@@ -2,7 +2,7 @@ gem "awesome_print"
 gem "rails"
 gem "zeitwerk"
 
-group "gem_server" do
+source "gem_server" do
   gem "selenium-webdriver"
 end
 
