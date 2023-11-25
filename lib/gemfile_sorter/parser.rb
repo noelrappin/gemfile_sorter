@@ -1,6 +1,6 @@
 module GemfileSorter
   class Parser
-    attr_reader :filename, :groups, :gem_holders, :top_level_gems, :sources
+    attr_reader :filename, :groups, :block_stack, :top_level_gems, :sources
     attr_accessor :current_comments, :leading_comments
 
     def self.parse(filename)
@@ -11,10 +11,10 @@ module GemfileSorter
 
     def initialize(filename)
       @filename = filename
-      @top_level_gems = GemHolder.new("top_level", line: "", line_number: nil)
+      @top_level_gems = BlockOfGems.new("top_level", line: "", line_number: nil)
       @leading_comments = CommentGroup.new
       @current_comments = CommentGroup.new
-      @gem_holders = [@top_level_gems]
+      @block_stack = [@top_level_gems]
       @groups = Groups.new
       @sources = Sources.new
     end
@@ -55,9 +55,9 @@ module GemfileSorter
       in ["#", *_rest]
         handle_comment(*_rest, line:, line_number:)
       in ["group", *names, "do"]
-        handle_holder(groups, names, line:, line_number:)
+        handle_block(groups, names, line:, line_number:)
       in ["source", name, "do"]
-        handle_holder(sources, name, line:, line_number:)
+        handle_block(sources, name, line:, line_number:)
       in ["end"]
         handle_end
       in []
@@ -68,31 +68,31 @@ module GemfileSorter
       end
     end
 
-    def holder_for_gem(gem)
+    def block_for_gem(gem)
       group = add_inline_gem(gem)
-      group || gem_holders.last
+      group || block_stack.last
     end
 
     def add_inline_gem(gem)
       return unless gem.inline_match?
-      meta_holder = (gem.inline_kind == "group") ? groups : sources
-      meta_holder.add_gem(gem)
+      block_map = (gem.inline_kind == "group") ? groups : sources
+      block_map.add_gem(gem)
     end
 
     def handle_gem(name, *options, line:, line_number:)
       result = Line::Gem.new(name, current_comments, *options, line_number:, line:)
-      holder_for_gem(result).add(result)
+      block_for_gem(result).add(result)
       self.current_comments = CommentGroup.new
       result
     end
 
-    def handle_holder(meta_holder, name, line:, line_number:)
-      holder = meta_holder.add(name, line:, line_number:)
-      gem_holders.push(holder)
+    def handle_block(block_map, name, line:, line_number:)
+      block = block_map.add(name, line:, line_number:)
+      block_stack.push(block)
     end
 
     def handle_end
-      gem_holders.pop
+      block_stack.pop
     end
 
     def handle_comment(*_rest, line:, line_number:)

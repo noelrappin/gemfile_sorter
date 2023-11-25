@@ -1,12 +1,12 @@
 module GemfileSorter
-  class MetaHolder
-    attr_accessor :gem_holders
+  class BlockMap
+    attr_accessor :blocks
 
     def initialize
-      @gem_holders = {}
+      @blocks = {}
     end
 
-    def empty? = gem_holders.empty?
+    def empty? = blocks.empty?
 
     def extra_line_unless_empty
       empty? ? "" : "\n"
@@ -17,13 +17,13 @@ module GemfileSorter
     end
 
     def add(names, line:, line_number:)
-      holder = holder(names, line:, line_number:)
-      gem_holders[holder.normalized_name] ||= holder
+      block = block(names, line:, line_number:)
+      blocks[block.normalized_name] ||= block
     end
 
     def to_s
       extra_line_unless_empty +
-        gem_holders.values.sort.map { _1.to_s }.join.delete_prefix("\n")
+        blocks.values.sort.map { _1.to_s }.join.delete_prefix("\n")
     end
   end
 end

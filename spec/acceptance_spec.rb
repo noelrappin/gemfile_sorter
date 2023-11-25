@@ -13,6 +13,7 @@ RSpec.describe "Acceptance Tests", :slow do
   specify { expect("basic_source").to be_correctly_sorted }
   specify { expect("duplicate_source").to be_correctly_sorted }
   specify { expect("inline_sources").to be_correctly_sorted }
+  specify { expect("source_with_nested_group").to be_correctly_sorted }
 
   # source with group
   # group with source

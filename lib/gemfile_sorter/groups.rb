@@ -1,6 +1,6 @@
 module GemfileSorter
-  class Groups < MetaHolder
-    def holder(names, line:, line_number:)
+  class Groups < BlockMap
+    def block(names, line:, line_number:)
       Line::Group.new(names, line:, line_number:)
     end
   end

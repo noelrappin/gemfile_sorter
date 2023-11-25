@@ -1,6 +1,6 @@
 module GemfileSorter
   module Line
-    class Group < GemHolder
+    class Group < BlockOfGems
       attr_accessor :names
 
       def initialize(*names, line:, line_number:)
