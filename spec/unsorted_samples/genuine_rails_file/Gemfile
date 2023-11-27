@@ -1,0 +1,62 @@
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby "3.2.2"
+
+gem "activerecord-postgres_enum"
+gem "acts_as_list"
+gem "amazing_print"
+gem "bcrypt", "~> 3.1.7"
+gem "bootsnap", require: false
+gem "business"
+gem "date_by_example"
+gem "friendly_id"
+gem "gitlab-chronic"
+gem "importmap-rails"
+gem "inline_svg"
+gem "kredis"
+gem "numbers_in_words"
+gem "paper_trail"
+gem "pg", "~> 1.1"
+gem "propshaft"
+gem "puma", "~> 5.0"
+gem "pundit"
+gem "rails", "~> 7.0.5"
+gem "redis"
+gem "simple_form"
+gem "simple_form-tailwind"
+gem "stimulus-rails"
+gem "tailwindcss-rails"
+gem "turbo-rails"
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "warning_signs"
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem "image_processing", "~> 1.2"
+
+group :development, :test do
+  gem "capybara"
+  gem "capybara-screenshot"
+  gem "debug", platforms: %i[mri mingw x64_mingw]
+  gem "dotenv-rails"
+  gem "erb-formatter"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "pry-rails"
+  gem "pry-rescue"
+  gem "rspec-collection_matchers"
+  gem "rspec-rails"
+  gem "selenium-webdriver"
+  gem "standard"
+  gem "standard-rails"
+  gem "test-prof"
+end
+
+group :development do
+  gem "annotate"
+  gem "erb_lint"
+  gem "web-console"
+  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+  # gem "rack-mini-profiler"
+  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+  # gem "spring"
+end
