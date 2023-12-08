@@ -40,8 +40,8 @@ module GemfileSorter
     def output
       leading_comments.to_s +
         top_level_gems.gem_string +
-        groups.to_s +
         sources.to_s +
+        groups.to_s +
         current_comments.extra_line_unless_empty +
         current_comments.to_s
     end
