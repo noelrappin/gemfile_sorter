@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gemfile_sorter (0.1.0)
+    gemfile_sorter (0.2.0)
       awesome_print
 
 GEM
