@@ -14,6 +14,7 @@ module GemfileSorter
 
   def self.execute(directory_name = ".")
     result = Parser.parse("#{directory_name}/Gemfile")
+    FileUtils.rm("#{directory_name}/Gemfile.unsorted") if File.exist?("#{directory_name}/Gemfile.unsorted")
     FileUtils.mv("#{directory_name}/Gemfile", "#{directory_name}/Gemfile.unsorted")
     File.write("#{directory_name}/Gemfile", result)
   end

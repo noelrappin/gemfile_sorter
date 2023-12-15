@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require_relative "../lib/gemfile_sorter"
-GemfileSorter.execute(ARGV)
+GemfileSorter.execute(ARGV.first)
