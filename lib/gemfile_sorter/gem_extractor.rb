@@ -12,7 +12,7 @@ module GemfileSorter
 
     def options = gem.options
 
-    def starting_index = options.find_index { _1.match(/#{key}/) }
+    def starting_index = options.find_index { _1.match(/\A:?#{key}:?\z/) }
 
     def match? = !!starting_index
 
@@ -76,7 +76,7 @@ module GemfileSorter
       result_string
     end
 
-    def symbol_result? = result.last&.include?(":")
+    def symbol_result? = result.last&.start_with?(":")
 
     def annotated_result
       symbol_result? ? ":#{result_string}" : %("#{result_string}")

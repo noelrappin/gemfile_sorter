@@ -1,0 +1,6 @@
+gem "awesome_print"
+gem "rails"
+
+source "http://special-source.com" do
+  gem "zeitwerk"
+end

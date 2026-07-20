@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.4.0]
+
+* Fix some odd parsing issues if the word "source" is in a name
+
 ## [0.3.0] - 2023-12-15
 
 * Fix for command line

@@ -16,6 +16,8 @@ RSpec.describe "Acceptance Tests", :slow do
   specify { expect("source_with_nested_group").to be_correctly_sorted }
   specify { expect("group_with_nested_source").to be_correctly_sorted }
   specify { expect("genuine_rails_file").to be_correctly_sorted }
+  specify { expect("basic_gems_with_different_confusing_branch_names").to be_correctly_sorted }
+  specify { expect("basic_gems_with_source_argument").to be_correctly_sorted }
 
   # inline with both
 end
